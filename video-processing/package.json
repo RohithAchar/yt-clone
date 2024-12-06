@@ -1,0 +1,24 @@
+{
+  "name": "video-processing",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "aws-sdk": "^2.1692.0",
+    "dotenv": "^16.4.7",
+    "fluent-ffmpeg": "^2.1.3",
+    "fs": "^0.0.1-security"
+  },
+  "devDependencies": {
+    "@types/aws-sdk": "^0.0.42",
+    "@types/fluent-ffmpeg": "^2.1.27",
+    "@types/node": "^22.10.1",
+    "typescript": "^5.7.2"
+  }
+}
