@@ -1,42 +1,53 @@
 "use client";
 
 import { Video } from "@/lib/types";
-import { Button } from "../ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { AspectRatio } from "../ui/aspect-ratio";
 
-const VideoCard = ({
+export const VideoCard = ({
   video,
   handlePlayVideo,
 }: {
   video: Video;
   handlePlayVideo: (videoKey: string) => void;
 }) => {
-  // Placeholder thumbnail URL
-  const placeholderThumbnailUrl =
-    "https://via.placeholder.com/320x180?text=Video+Thumbnail";
-
   return (
-    <Card key={video.key} className="shadow-md">
-      <CardHeader>
-        <AspectRatio ratio={16 / 9} className="mb-4">
+    <div
+      className="cursor-pointer group"
+      onClick={() => handlePlayVideo(video.key)}
+    >
+      {/* Thumbnail Container */}
+      <div className="relative">
+        <div className="aspect-video w-full overflow-hidden rounded-xl bg-gray-100">
           <img
-            src={placeholderThumbnailUrl}
-            alt="Placeholder thumbnail"
-            className="object-cover w-full h-full rounded"
+            src="https://images.unsplash.com/photo-1682687220742-aba13b6e50ba"
+            alt={video.key}
+            className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-200"
           />
-        </AspectRatio>
-        <CardTitle>{video.key}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p>Size: {(video.size / 1024).toFixed(2)} KB</p>
-        <p>Last Modified: {new Date(video.lastModified).toLocaleString()}</p>
-        <Button className="mt-4" onClick={() => handlePlayVideo(video.key)}>
-          Play
-        </Button>
-      </CardContent>
-    </Card>
+        </div>
+        <div className="absolute bottom-1 right-1 bg-black bg-opacity-80 text-white text-xs px-1 rounded">
+          {Math.floor(Math.random() * 10) + 1}:
+          {Math.floor(Math.random() * 60)
+            .toString()
+            .padStart(2, "0")}
+        </div>
+      </div>
+
+      {/* Video Info */}
+      <div className="mt-3 flex gap-3">
+        {/* Title and Meta Container */}
+        <div className="flex flex-col">
+          <h3 className="font-medium text-sm line-clamp-2 text-gray-900 group-hover:text-blue-600">
+            {video.key}
+          </h3>
+          <div className="text-sm text-gray-600 mt-1">
+            {(video.size / 1024 / 1024).toFixed(1)}M views •{" "}
+            {new Date(video.lastModified).toLocaleDateString(undefined, {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
-
-export default VideoCard;
