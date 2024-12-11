@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
-import { Menu, Search, Bell, User, Video, Mic } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Menu, Search, Bell, User, Video, Mic } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import UploadVideoModal from "../modal/UploadModal";
 
 export function Header() {
   return (
@@ -36,9 +37,10 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon">
+          <UploadVideoModal />
+          {/* <Button variant="ghost" size="icon">
             <Video className="h-5 w-5" />
-          </Button>
+          </Button> */}
           <Button variant="ghost" size="icon">
             <Bell className="h-5 w-5" />
           </Button>
