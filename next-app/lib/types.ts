@@ -15,3 +15,9 @@ export interface Category {
   id: string;
   name: string;
 }
+
+export interface Video {
+  key: string;
+  lastModified: string;
+  size: number;
+}
