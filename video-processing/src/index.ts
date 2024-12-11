@@ -145,7 +145,6 @@ const pollSQS = async (): Promise<void> => {
 
   try {
     const data = await sqs.receiveMessage(params).promise();
-
     if (data.Messages) {
       for (const message of data.Messages) {
         console.log("Processing new message:", message.Body);

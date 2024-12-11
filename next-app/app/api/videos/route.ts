@@ -75,6 +75,7 @@ export async function POST(req: NextRequest) {
       Key: file.name,
       Body: buffer,
       ContentType: file.type,
+      ACL: "bucket-owner-full-control",
     };
 
     await s3.upload(params).promise();

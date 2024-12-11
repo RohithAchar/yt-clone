@@ -16,7 +16,7 @@ import { Loader } from "lucide-react";
 export default function UploadVideoModal() {
   const [file, setFile] = useState<File | null>(null);
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -34,7 +34,7 @@ export default function UploadVideoModal() {
     formData.append("file", file);
 
     try {
-      setLoading(true);
+      setIsLoading(true);
       const response = await fetch("/api/videos", {
         method: "POST",
         body: formData,
@@ -52,7 +52,7 @@ export default function UploadVideoModal() {
       console.error("Error uploading file:", error);
       alert("An unexpected error occurred.");
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -81,7 +81,8 @@ export default function UploadVideoModal() {
                 />
               </div>
               <Button onClick={handleUpload} className="w-full">
-                {loading ? (
+                {/* Show loader is loading */}
+                {isLoading ? (
                   <Loader className="mr-2 h-4 w-4 animate-spin" />
                 ) : (
                   "Upload"
