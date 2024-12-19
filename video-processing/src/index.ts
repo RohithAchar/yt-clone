@@ -32,16 +32,21 @@ const downloadFromS3 = async (
   key: string,
   downloadPath: string
 ): Promise<void> => {
-  const params = { Bucket: bucket, Key: key };
-  const fileStream = fs.createWriteStream(downloadPath);
+  try {
+    const params = { Bucket: bucket, Key: key };
+    const fileStream = fs.createWriteStream(downloadPath);
 
-  return new Promise((resolve, reject) => {
-    s3.getObject(params)
-      .createReadStream()
-      .pipe(fileStream)
-      .on("finish", resolve)
-      .on("error", reject);
-  });
+    return new Promise((resolve, reject) => {
+      s3.getObject(params)
+        .createReadStream()
+        .pipe(fileStream)
+        .on("finish", resolve)
+        .on("error", reject);
+    });
+  } catch (error) {
+    // Delete the message from the queue
+    console.error("Error downloading file from S3:", error);
+  }
 };
 
 /**
@@ -65,15 +70,19 @@ const processVideo = async (
   inputPath: string,
   outputPath: string
 ): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    ffmpeg(inputPath)
-      .output(outputPath)
-      .videoCodec("libx264")
-      .size("?x360")
-      .on("end", () => resolve())
-      .on("error", reject)
-      .run();
-  });
+  try {
+    return new Promise((resolve, reject) => {
+      ffmpeg(inputPath)
+        .output(outputPath)
+        .videoCodec("libx264")
+        .size("?x360")
+        .on("end", () => resolve())
+        .on("error", reject)
+        .run();
+    });
+  } catch (error) {
+    console.log("Error processing video:", error);
+  }
 };
 
 /**
@@ -98,7 +107,7 @@ const processQueueMessage = async (message: AWS.SQS.Message): Promise<void> => {
   const record = Records[0];
 
   const bucketName = record.s3.bucket.name;
-  const key = record.s3.object.key;
+  const key = decodeURIComponent(record.s3.object.key);
 
   const rawVideoPath = path.join(RAW_VIDEO_DIR, key);
   const processedVideoPath = path.join(PROCESSED_VIDEO_DIR, `processed-${key}`);
