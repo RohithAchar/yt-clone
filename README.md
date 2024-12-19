@@ -1,8 +1,8 @@
 # yt-clone
 
-<!-- Add youtube video link here with thumbnail -->
+<!-- Add youtube video link here with thumbnail take full width -->
 
-<a href="https://youtu.be/shKFkITugSc" target="_blank"><img src="https://img.youtube.com/vi/shKFkITugSc/0.jpg" alt="YT Video Link" width="480" height="270" border="10" /></a>
+<a href="https://youtu.be/shKFkITugSc" target="_blank"><img src="https://img.youtube.com/vi/shKFkITugSc/0.jpg" alt="YT Video Link" width="1280" height="720" border="10" /></a>
 
 <!-- Add a brief description of the project -->
 
